@@ -1615,6 +1615,11 @@ function setupEventListeners() {
 // UYGULAMA BAŞLATICI
 // ==========================================================================
 window.addEventListener("DOMContentLoaded", () => {
+  const mainHeader = document.getElementById("mainHeader");
+  if (mainHeader) {
+    mainHeader.style.setProperty("position", "relative", "important");
+    mainHeader.style.setProperty("top", "auto", "important");
+  }
   initTheme();
   loadFromStorage();
   populateFormOptions();
