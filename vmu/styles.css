@@ -1965,6 +1965,11 @@ body.form-locked input[type="radio"] {
    ========================================================================== */
 
 @media (max-width: 992px) {
+  .app-header {
+    position: static !important;
+    top: auto !important;
+  }
+
   .assigned-cards-grid {
     grid-template-columns: 1fr;
   }
@@ -2014,26 +2019,48 @@ body.form-locked input[type="radio"] {
     border-radius: var(--radius-lg);
   }
 
+  /* Mobilde Başlığın Sabit (Sticky) Kalmasını Engelleyerek İçeriğin Tam Görünmesini Sağlar */
   .app-header {
-    padding: 0.7rem 0.85rem;
+    position: static !important;
+    top: auto !important;
+    padding: 0.65rem 0.85rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .brand-area {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 0.65rem;
   }
 
   .brand-titles .main-title {
-    font-size: 1.05rem;
+    font-size: 1rem;
+    line-height: 1.3;
   }
 
   .brand-titles .sub-title {
-    font-size: 0.72rem;
+    display: none !important; /* Mobilde ekranı gereksiz dikey doldurmasını engeller */
   }
 
   .header-controls {
     width: 100%;
-    justify-content: space-between;
-    margin-top: 0.35rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.45rem;
+    margin-top: 0.45rem;
+  }
+
+  .header-controls .btn,
+  .header-controls .theme-toggle-btn,
+  .header-controls .status-pill {
+    width: 100%;
+    justify-content: center;
+    padding: 0.35rem 0.5rem;
+    font-size: 0.74rem;
+    min-height: 36px;
   }
 
   .status-pill.cyber-pill {
-    flex: 1;
     justify-content: center;
   }
 
