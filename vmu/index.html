@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>Veri Analitiği Lab - Veri Türleri, Kaynakları ve VEBB Piramidi</title>
+  <meta name="description" content="Üniversite Veri Analitiği dersi interaktif vaka analizi, veri türleri, kaynakları ve VEBB piramidi atölye çalışması platformu.">
+  <meta name="theme-color" content="#070913">
+  
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="theme-cyber-dark">
+
+  <!-- Arka Plan Neon Efekt Katmanı -->
+  <div class="ambient-glow glow-1" aria-hidden="true"></div>
+  <div class="ambient-glow glow-2" aria-hidden="true"></div>
+  <div class="ambient-glow glow-3" aria-hidden="true"></div>
+
+  <!-- Üst Navigasyon / Header -->
+  <header class="app-header" id="mainHeader">
+    <div class="header-container">
+      <div class="brand-area">
+        <div class="brand-badge-cyber">
+          <span class="cyber-dot"></span>
+          <span>DATA ANALYTICS LAB</span>
+        </div>
+        <div class="brand-titles">
+          <h1 class="main-title">Veri Analitiği: Veri Türleri ve Kaynakları</h1>
+          <p class="sub-title">İnteraktif Sınıf İçi Vaka Çalışması & VEBB Karar Piramidi Platformu</p>
+        </div>
+      </div>
+
+      <div class="header-controls">
+        <div class="status-pill cyber-pill" id="completionStatusPill" title="Seçili grubun çözülen senaryo oranı">
+          <span class="status-dot"></span>
+          <span id="completionStatusText">Grup İlerlemesi: 0 / 3</span>
+        </div>
+
+        <button type="button" class="btn btn-cyber-outline btn-sm" id="btnAllGroupsMatrix" title="Sınıftaki tüm grupların kura dağıtımını gör">
+          <span>📊</span> Kura Tablosu
+        </button>
+
+        <!-- Hoca Modu Toggle Butonu (Öğretmene özel, şifreli) -->
+        <button type="button" class="btn btn-teacher-cyber btn-sm" id="btnToggleTeacherMode" title="Öğretmen Paneli">
+          <span class="icon">🔒</span>
+          <span id="teacherBtnText">Hoca Modu</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Ana İçerik Konteyneri -->
+  <main class="main-layout">
+
+    <!-- BÖLÜM 1: GRUP SEÇİMİ VE YÖNETİM PANELİ -->
+    <section class="section-card cyber-card group-management-card" id="groupSection">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <span class="section-step-num cyber-step">BÖLÜM 01</span>
+          <h2 class="section-title">Grup Seçimi ve Kura Yönetimi</h2>
+        </div>
+        <div class="section-actions">
+          <button type="button" class="btn btn-cyber-primary btn-sm" id="btnShuffleDraw">
+            <span class="btn-icon">🎲</span> Senaryoları Yeniden Dağıt (Kura Çek)
+          </button>
+        </div>
+      </div>
+
+      <!-- Grup Hap Butonları Barı (Grup 1 - Grup 10) -->
+      <div class="group-selector-wrapper">
+        <div class="group-selector-header-row">
+          <span class="group-select-label">Grubunuzu Seçin:</span>
+          <span class="group-select-hint">Sağa/sola kaydırarak dilediğiniz gruba geçiş yapabilirsiniz</span>
+        </div>
+        <div class="group-buttons-scroll-container">
+          <div class="group-buttons-row" id="groupButtonsRow" role="tablist" aria-label="Grup Seçimi">
+            <!-- JS ile 10 grup butonu basılacak -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Seçili Gruba Atanan 3 Senaryonun Kartları -->
+      <div class="assigned-scenarios-container">
+        <div class="assigned-heading">
+          <span class="assigned-title" id="assignedHeaderTitle">Grup 1 İçin Kurada Çıkan 3 Senaryo:</span>
+          <span class="assigned-instruction">İncelemek ve cevaplamak istediğiniz senaryo kartına tıklayın:</span>
+        </div>
+
+        <div class="assigned-cards-grid" id="assignedCardsGrid">
+          <!-- JS ile 3 senaryo kartı basılacak -->
+        </div>
+      </div>
+    </section>
+
+    <!-- BÖLÜM 2: SEÇİLİ SENARYO İNCELEME EKRANI & VERİ TABLOSU -->
+    <section class="section-card cyber-card scenario-view-card" id="scenarioSection">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <span class="section-step-num cyber-step">BÖLÜM 02</span>
+          <h2 class="section-title">Senaryo ve Ham Veri Seti İnceleme</h2>
+        </div>
+        <div class="scenario-meta-badges" id="scenarioMetaBadges">
+          <!-- Sektör ve Senaryo ID Rozetleri -->
+        </div>
+      </div>
+
+      <!-- Senaryo Bağlam & Problem Tanımı Kutusu -->
+      <div class="scenario-context-box cyber-context-box" id="scenarioContextBox">
+        <div class="scenario-context-header">
+          <div class="scenario-icon-glow-wrap">
+            <span class="scenario-icon-large" id="scenarioIcon">🏢</span>
+          </div>
+          <div class="scenario-context-info">
+            <h3 class="scenario-current-title" id="scenarioTitle">Senaryo Yükleniyor...</h3>
+            <span class="scenario-sector-tag" id="scenarioSector">Sektör Bilgisi</span>
+          </div>
+        </div>
+        <p class="scenario-context-text" id="scenarioDescription">Senaryo açıklaması ve problem tanımı burada yer alacaktır.</p>
+      </div>
+
+      <!-- 10 Satırlık Modern HTML Veri Tablosu -->
+      <div class="table-container-card cyber-table-card">
+        <div class="table-top-toolbar">
+          <div class="table-info-note">
+            <span class="note-icon">⚡</span>
+            <span><strong>CANLI VERİ MATRİSİ (10 Satır):</strong> Aşağıdaki tabloyu inceleyiniz. Mobilde tabloyu sağa-sola kaydırabilirsiniz.</span>
+          </div>
+          <div class="table-toolbar-actions">
+            <button type="button" class="btn btn-cyber-ghost btn-xs" id="btnCopyTableJson" title="Veri tablosunu JSON olarak kopyala">
+              <span>📋</span> Veriyi Kopyala
+            </button>
+          </div>
+        </div>
+
+        <div class="data-table-scrollable">
+          <table class="data-table cyber-table" id="scenarioDataTable" aria-label="Senaryo Veri Tablosu">
+            <thead id="dataTableHead">
+              <!-- JS ile dinamik sütunlar -->
+            </thead>
+            <tbody id="dataTableBody">
+              <!-- JS ile 10 satır -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- BÖLÜM 3: ÖĞRENCİ ÇALIŞMA FORMU VE VEBB PİRAMİDİ -->
+    <section class="section-card cyber-card worksheet-card" id="worksheetSection">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <span class="section-step-num cyber-step">BÖLÜM 03</span>
+          <h2 class="section-title">Öğrenci Çalışma Formu (Kriter & VEBB Analizi)</h2>
+        </div>
+        <div class="form-active-target">
+          <span class="target-tag cyber-tag" id="formCurrentTargetBadge">Grup 1 • Senaryo 1</span>
+        </div>
+      </div>
+
+      <!-- KİLİTLİ FORM UYARI VE DURUM BANNERI (KONTROL SONRASI DEVREYE GİRER) -->
+      <div class="locked-banner" id="lockedFormBanner" style="display:none;">
+        <div class="locked-banner-icon">🔒</div>
+        <div class="locked-banner-content">
+          <strong class="locked-banner-title">BU SENARYO KESİN GÖNDERİLDİ VE KİLİTLENDİ</strong>
+          <span class="locked-banner-desc">Cevaplarınız dondurulmuştur (tekrar değiştirilemez). Aşağıda başarı puanınızı ve detaylı hata gerekçelerini inceleyebilirsiniz.</span>
+        </div>
+        <button type="button" class="btn btn-warning-soft btn-xs" id="btnTeacherUnlockForm" style="display:none;">
+          🔓 Kilidi Aç (Hoca Yetkisi)
+        </button>
+      </div>
+
+      <!-- Form Alanları -->
+      <form id="studentWorksheetForm" autocomplete="off" onsubmit="return false;">
+        
+        <!-- ÜST KRİTERLER GRİDİ (4 KRİTER) -->
+        <div class="criteria-grid">
+          
+          <!-- 1. Veri Kaynağı -->
+          <div class="criteria-card cyber-criteria-card" id="criteriaCardSource">
+            <div class="criteria-card-head">
+              <span class="criteria-num c-num-1">1</span>
+              <label for="selectDataSource" class="criteria-label">Veri Kaynağı</label>
+            </div>
+            <p class="criteria-desc">Veri ilk elden mi toplandı (Birincil) yoksa mevcut dış/iç sistemlerden mi aktarıldı (İkincil)?</p>
+            <div class="input-wrapper">
+              <select id="selectDataSource" class="form-select cyber-select" required>
+                <option value="" disabled selected>-- Veri Kaynağını Seçiniz --</option>
+                <!-- JS ile options doldurulacak -->
+              </select>
+            </div>
+            <div class="teacher-solution-badge" id="teacherAnsSource" style="display:none;"></div>
+          </div>
+
+          <!-- 2. Biçimsel Sınıflandırma -->
+          <div class="criteria-card cyber-criteria-card" id="criteriaCardFormat">
+            <div class="criteria-card-head">
+              <span class="criteria-num c-num-2">2</span>
+              <label class="criteria-label">Biçimsel Sınıflandırma</label>
+            </div>
+            <p class="criteria-desc">Verinin yapısal şeması ve format düzeni nedir?</p>
+            <div class="radio-pill-group" id="formatRadioGroup">
+              <!-- JS ile radio pill'leri basılacak -->
+            </div>
+            <div class="teacher-solution-badge" id="teacherAnsFormat" style="display:none;"></div>
+          </div>
+
+          <!-- 3. Veri Türü -->
+          <div class="criteria-card cyber-criteria-card" id="criteriaCardType">
+            <div class="criteria-card-head">
+              <span class="criteria-num c-num-3">3</span>
+              <label for="selectDataType" class="criteria-label">Veri Türü</label>
+            </div>
+            <p class="criteria-desc">Veri özniteliklerinin matematiksel / mantıksal doğası nedir?</p>
+            <div class="input-wrapper">
+              <select id="selectDataType" class="form-select cyber-select" required>
+                <option value="" disabled selected>-- Veri Türünü Seçiniz --</option>
+                <!-- JS ile options doldurulacak -->
+              </select>
+            </div>
+            <div class="teacher-solution-badge" id="teacherAnsType" style="display:none;"></div>
+          </div>
+
+          <!-- 4. Veri Analitiği Türü -->
+          <div class="criteria-card cyber-criteria-card" id="criteriaCardAnalytics">
+            <div class="criteria-card-head">
+              <span class="criteria-num c-num-4">4</span>
+              <label for="selectAnalyticsType" class="criteria-label">Veri Analitiği Türü</label>
+            </div>
+            <p class="criteria-desc">Bu vaka ile hangi seviye analitik soruya yanıt aranmaktadır?</p>
+            <div class="input-wrapper">
+              <select id="selectAnalyticsType" class="form-select cyber-select" required>
+                <option value="" disabled selected>-- Analitik Türünü Seçiniz --</option>
+                <!-- JS ile options doldurulacak -->
+              </select>
+            </div>
+            <div class="teacher-solution-badge" id="teacherAnsAnalytics" style="display:none;"></div>
+          </div>
+
+        </div>
+
+        <!-- 5. VEBB (DIKW) PİRAMİDİ ÇALIŞMA ALANI -->
+        <div class="vebb-master-container cyber-vebb-master">
+          <div class="vebb-header-bar">
+            <div class="vebb-header-info">
+              <h3 class="vebb-title">🔺 VEBB Karar Piramidi (Veri → Enformasyon → İçgörü → Bilgelik)</h3>
+              <p class="vebb-desc">Ham veriden stratejik karar ve eyleme uzanan analitik dönüşüm basamaklarını bu senaryo için açıklayınız.</p>
+            </div>
+          </div>
+
+          <!-- Mobilde yatay adım çubuğu, masaüstünde 3D neon piramit görünümü -->
+          <div class="vebb-layout">
+            <!-- Sol / Görsel Fütüristik Neon Piramit Göstergesi -->
+            <div class="vebb-pyramid-visual cyber-pyramid-visual" aria-hidden="true">
+              <div class="pyramid-level pyramid-wisdom neon-tier-4" data-target="vebbWisdom">
+                <span class="pyr-level-badge">4. KAT</span>
+                <span class="pyr-level-name">BİLGELİK (Wisdom)</span>
+                <span class="pyr-level-sub">Ne Yapmalıyız? Aksiyon</span>
+              </div>
+              <div class="pyramid-level pyramid-insight neon-tier-3" data-target="vebbInsight">
+                <span class="pyr-level-badge">3. KAT</span>
+                <span class="pyr-level-name">İÇGÖRÜ (Insight)</span>
+                <span class="pyr-level-sub">Neden Oldu? Kök Neden</span>
+              </div>
+              <div class="pyramid-level pyramid-info neon-tier-2" data-target="vebbInformation">
+                <span class="pyr-level-badge">2. KAT</span>
+                <span class="pyr-level-name">BİLGİ / ENFORMASYON</span>
+                <span class="pyr-level-sub">Ne Oldu? Özet & Örüntü</span>
+              </div>
+              <div class="pyramid-level pyramid-data neon-tier-1" data-target="vebbData">
+                <span class="pyr-level-badge">1. KAT</span>
+                <span class="pyr-level-name">VERİ (Data)</span>
+                <span class="pyr-level-sub">Ham Kayıtlar & Ölçümler</span>
+              </div>
+            </div>
+
+            <!-- Sağ / Form Textarea Alanları -->
+            <div class="vebb-fields-list">
+              
+              <!-- VEBB 1: VERİ -->
+              <div class="vebb-field-card field-data cyber-field" id="cardVebbData">
+                <div class="vebb-field-header">
+                  <div class="vebb-badge-title">
+                    <span class="vebb-circle c-data">1</span>
+                    <label for="inputVebbData" class="vebb-field-label">VERİ (Ham Kayıtlar Nedir?)</label>
+                  </div>
+                  <span class="vebb-hint">Bu senaryoda toplanan ham gözlemler, değişkenler ve ölçüm kayıtları nelerdir?</span>
+                </div>
+                <textarea id="inputVebbData" class="vebb-textarea cyber-textarea" rows="3" placeholder="Örn: Sensörlerden belirli saniyelerde okunan ivme (g), titreşim frekansı ve gerinim ölçüm değerleri..."></textarea>
+                <div class="teacher-vebb-box" id="teacherBoxData" style="display:none;"></div>
+              </div>
+
+              <!-- VEBB 2: ENFORMASYON / BİLGİ -->
+              <div class="vebb-field-card field-info cyber-field" id="cardVebbInfo">
+                <div class="vebb-field-header">
+                  <div class="vebb-badge-title">
+                    <span class="vebb-circle c-info">2</span>
+                    <label for="inputVebbInfo" class="vebb-field-label">BİLGİ / ENFORMASYON (Çıkan Özet / Örüntü Nedir?)</label>
+                  </div>
+                  <span class="vebb-hint">Veriler işlendiğinde veya tablodaki değerler karşılaştırıldığında hangi eğilim/anomali ortaya çıkıyor?</span>
+                </div>
+                <textarea id="inputVebbInfo" class="vebb-textarea cyber-textarea" rows="3" placeholder="Örn: Kat yükseldikçe titreşim periyodu uzuyor; özellikle 32. katta ivme 0.31g kritik eşiğine ulaşıyor..."></textarea>
+                <div class="teacher-vebb-box" id="teacherBoxInfo" style="display:none;"></div>
+              </div>
+
+              <!-- VEBB 3: İÇGÖRÜ -->
+              <div class="vebb-field-card field-insight cyber-field" id="cardVebbInsight">
+                <div class="vebb-field-header">
+                  <div class="vebb-badge-title">
+                    <span class="vebb-circle c-insight">3</span>
+                    <label for="inputVebbInsight" class="vebb-field-label">İÇGÖRÜ (Neden Böyle Bir Sonuç Çıktı? Kök Neden)</label>
+                  </div>
+                  <span class="vebb-hint">Bu durumun arkasındaki kök neden, sistemik mekanizma veya etken nedir?</span>
+                </div>
+                <textarea id="inputVebbInsight" class="vebb-textarea cyber-textarea" rows="3" placeholder="Örn: Üst katlarda rüzgar yükü alt katman rezonansına yol açmakta ve kule tepe noktasında yapısal yorulma riski doğurmaktadır..."></textarea>
+                <div class="teacher-vebb-box" id="teacherBoxInsight" style="display:none;"></div>
+              </div>
+
+              <!-- VEBB 4: BİLGELİK -->
+              <div class="vebb-field-card field-wisdom cyber-field" id="cardVebbWisdom">
+                <div class="vebb-field-header">
+                  <div class="vebb-badge-title">
+                    <span class="vebb-circle c-wisdom">4</span>
+                    <label for="inputVebbWisdom" class="vebb-field-label">BİLGELİK (Alınacak Aksiyon / Karar Nedir?)</label>
+                  </div>
+                  <span class="vebb-hint">Bu analitik içgörüye dayanarak organizasyon veya yetkililer hangi önlemi/eylemi uygulamalıdır?</span>
+                </div>
+                <textarea id="inputVebbWisdom" class="vebb-textarea cyber-textarea" rows="3" placeholder="Örn: Ayarlanmış kütle sönümleyicisini (TMD) devreye alın, asansörleri güvenli kata indirin ve binada akustik kontrol başlatın..."></textarea>
+                <div class="teacher-vebb-box" id="teacherBoxWisdom" style="display:none;"></div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- ÖĞRENCİ KESİN GÖNDERME, KİLİTLEME VE KONTROL PANELİ -->
+        <div class="self-check-container cyber-check-container" id="selfCheckContainer">
+          <div class="self-check-bar">
+            <div class="self-check-info">
+              <span class="self-check-icon glow-pulse-icon">🎯</span>
+              <div class="self-check-text">
+                <h4 class="self-check-title" id="checkActionTitle">Cevapları Kaydet, Kilitle & Kontrol Et</h4>
+                <p class="self-check-sub" id="checkActionDesc">Tüm alanları doldurduktan sonra bu butona basınız. <strong>Cevaplarınız sisteme kaydedilerek kilitlenecektir</strong> (tekrar doldurma ve değiştirme engellenir) ve anlık doğruluk/hata analiziniz açılacaktır.</p>
+              </div>
+            </div>
+            <button type="button" class="btn btn-cyber-primary btn-check-answers" id="btnCheckScenarioAnswers">
+              <span id="btnCheckIcon">🔒</span> <span id="btnCheckText">🔒 Cevapları Kaydet & Kontrol Et</span>
+            </button>
+          </div>
+
+          <!-- Açılır Geribildirim ve Hata Analizi Kutusu -->
+          <div class="self-check-results-card cyber-results-card" id="selfCheckResultsCard" style="display:none;">
+            <div class="results-card-header">
+              <div class="score-summary-wrap">
+                <span class="score-badge cyber-score-badge" id="checkScoreBadge">0 / 4 Kriter Doğru</span>
+                <span class="score-status-text" id="checkScoreStatusText">Değerlendirme Sonucu</span>
+              </div>
+              <button type="button" class="btn btn-cyber-ghost btn-xs" id="btnCloseFeedbackPanel">Kapat</button>
+            </div>
+            <div class="results-items-grid" id="feedbackItemsGrid">
+              <!-- JS ile kriter bazlı doğru/yanlış gerekçe kartları doldurulacak -->
+            </div>
+            <div class="vebb-self-eval-box cyber-eval-box" id="vebbSelfEvalBox">
+              <!-- JS ile VEBB seviyesi ideal model karşılaştırması -->
+            </div>
+          </div>
+        </div>
+
+        <!-- BÖLÜM 4: KAYDETME VE DIŞA AKTARMA EYLEM ÇUBUĞU -->
+        <div class="form-action-bar cyber-action-bar">
+          <div class="action-status-indicator" id="saveStatusIndicator">
+            <span class="save-status-dot"></span>
+            <span id="saveStatusMsg">Tüm değişiklikler anlık yerel hafızaya kaydedilir.</span>
+          </div>
+
+          <div class="action-buttons-group">
+            <button type="button" class="btn btn-cyber-success" id="btnSaveAnswers">
+              <span class="btn-icon">💾</span> Taslağı Kaydet
+            </button>
+
+            <div class="dropdown-export-wrapper">
+              <button type="button" class="btn btn-cyber-outline" id="btnExportMenuToggle">
+                <span class="btn-icon">📥</span> Raporu İndir ▾
+              </button>
+              <div class="dropdown-export-menu cyber-dropdown" id="exportMenuDropdown">
+                <button type="button" class="dropdown-item" id="btnExportJson">
+                  <span>📄</span> JSON Olarak İndir (Tüm Veri)
+                </button>
+                <button type="button" class="dropdown-item" id="btnExportTxt">
+                  <span>📝</span> TXT Çalışma Raporu İndir
+                </button>
+                <button type="button" class="dropdown-item" id="btnPrintReport">
+                  <span>🖨️</span> PDF / Yazdır Formatı
+                </button>
+              </div>
+            </div>
+
+            <button type="button" class="btn btn-warning-soft" id="btnClearForm">
+              <span class="btn-icon">🧹</span> Formu Temizle
+            </button>
+          </div>
+        </div>
+
+      </form>
+    </section>
+
+  </main>
+
+  <!-- MODAL: HOCA MODU ŞİFRE DOĞRULAMA (Şifre gizli, ipucu yok) -->
+  <div class="modal-overlay" id="teacherPasswordModal" style="display:none;">
+    <div class="modal-card cyber-modal">
+      <div class="modal-header">
+        <h3 class="modal-title">🔑 Hoca Modu Girişi</h3>
+        <button type="button" class="modal-close-btn" id="btnCloseTeacherModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-text">Bu alan ders sorumlusu öğretim üyesine özeldir. Tüm senaryoların resmi kriter yanıt anahtarlarını, kilit açma yetkisini ve VEBB ideal çözümlerini görüntülemek için öğretmen şifrenizi giriniz.</p>
+        <div class="password-input-group">
+          <label for="teacherPasswordInput" class="form-label">Öğretmen Şifresi:</label>
+          <input type="password" id="teacherPasswordInput" class="form-input cyber-input" placeholder="Şifrenizi giriniz" autocomplete="off">
+        </div>
+        <div class="modal-error-msg" id="teacherModalError" style="display:none;"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-cyber-ghost" id="btnCancelTeacherModal">İptal</button>
+        <button type="button" class="btn btn-cyber-primary" id="btnSubmitTeacherPassword">Giriş Yap & Aç</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: TÜM GRUPLARIN KURA DAĞITIM MATRİSİ -->
+  <div class="modal-overlay" id="matrixModal" style="display:none;">
+    <div class="modal-card modal-lg cyber-modal">
+      <div class="modal-header">
+        <h3 class="modal-title">📊 Sınıf Kura Dağıtım Matrisi (Grup 1 - Grup 10)</h3>
+        <button type="button" class="modal-close-btn" id="btnCloseMatrixModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-text">Sınıftaki 10 grubun kura sonucu atanmış olan 3'er senaryosunun genel dağılımı ve kilitlenme / tamamlama durumları:</p>
+        <div class="matrix-table-wrap">
+          <table class="matrix-table cyber-matrix-table">
+            <thead>
+              <tr>
+                <th>Grup No</th>
+                <th>1. Senaryo</th>
+                <th>2. Senaryo</th>
+                <th>3. Senaryo</th>
+                <th>Durum</th>
+              </tr>
+            </thead>
+            <tbody id="matrixTableBody">
+              <!-- JS ile doldurulacak -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-cyber-ghost" id="btnExportMatrixJson">JSON İndir</button>
+        <button type="button" class="btn btn-cyber-primary" id="btnCloseMatrixModalBtn">Kapat</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- BİLDİRİM (TOAST) BİLEŞENİ -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <!-- Scriptler -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
