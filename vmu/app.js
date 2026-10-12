@@ -1,7 +1,37 @@
 /**
- * VERİ ANALİTİĞİ ATÖLYE ÇALIŞMASI - UYGULAMA MANTIĞI & ETKİLEŞİM YÖNETİMİ
+ * VERİ MADENCİLİĞİ ATÖLYE ÇALIŞMASI - UYGULAMA MANTIĞI & ETKİLEŞİM YÖNETİMİ
  * Single Page Application Controller (Vanilla JS ES6+)
  */
+
+// ==========================================================================
+// SADE & ŞIK VEKTÖREL SVG İKON HARİTASI (AI EMOJİLERİNDEN ARINDIRILMIŞ)
+// ==========================================================================
+const SVG_ICONS = {
+  seismic: `<svg class="ui-icon" viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l8-4v18M13 10l3-2v13"/><line x1="2" y1="13" x2="6" y2="13"/><polyline points="8 12 10 9 12 15 14 11 16 13"/></svg>`,
+  robot: `<svg class="ui-icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4M8 15h.01M16 15h.01M9 19h6"/></svg>`,
+  scraping: `<svg class="ui-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><polyline points="15 9 18 6 21 9"/></svg>`,
+  turnover: `<svg class="ui-icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+  social: `<svg class="ui-icon" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><line x1="8" y1="9" x2="16" y2="9"/><line x1="8" y1="13" x2="13" y2="13"/></svg>`,
+  pharma: `<svg class="ui-icon" viewBox="0 0 24 24"><path d="M10 2v7.31L4.17 19.46A2 2 0 0 0 5.89 22h12.22a2 2 0 0 0 1.72-2.54L14 9.31V2h-4z"/><line x1="8.5" y1="2" x2="15.5" y2="2"/><line x1="7" y1="16" x2="17" y2="16"/></svg>`,
+  eco: `<svg class="ui-icon" viewBox="0 0 24 24"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/></svg>`,
+  freight: `<svg class="ui-icon" viewBox="0 0 24 24"><path d="M2 21c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.5 0 2.5 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M19.38 20A11.6 11.6 0 0 0 21 14l-9-4-9 4c0 2.26.59 4.37 1.62 6"/><path d="M12 10V4m-3 3h6"/></svg>`,
+  clickstream: `<svg class="ui-icon" viewBox="0 0 24 24"><path d="M3 3l7 18 3-7 7-3L3 3z"/><path d="M13 13l6 6"/></svg>`,
+  retail: `<svg class="ui-icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`,
+  lock: `<svg class="ui-icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>`,
+  unlock: `<svg class="ui-icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg>`,
+  check: `<svg class="ui-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>`,
+  x: `<svg class="ui-icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`,
+  alert: `<svg class="ui-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`,
+  sun: `<svg class="ui-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`,
+  moon: `<svg class="ui-icon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`,
+  copy: `<svg class="ui-icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>`
+};
+
+function getSvgIcon(name, extraClass = "") {
+  const raw = SVG_ICONS[name] || SVG_ICONS.retail;
+  if (!extraClass) return raw;
+  return raw.replace('class="ui-icon"', `class="ui-icon ${extraClass}"`);
+}
 
 // ==========================================================================
 // SABİTLER VE BAŞLANGIÇ DURUMU (STATE)
@@ -11,10 +41,11 @@ const SCENARIOS_PER_GROUP = 3;
 const TEACHER_PASSWORD = "vm2627"; // Öğretmen modu gizli şifresi
 
 const STORAGE_KEYS = {
-  ASSIGNMENTS: "analytics_workshop_assignments_v3",
-  SUBMISSIONS: "analytics_workshop_submissions_v3",
-  EVALUATIONS: "analytics_workshop_evaluations_v3",
-  TEACHER_UNLOCKED: "analytics_workshop_teacher_unlocked_v3"
+  ASSIGNMENTS: "mining_workshop_assignments_v4",
+  SUBMISSIONS: "mining_workshop_submissions_v4",
+  EVALUATIONS: "mining_workshop_evaluations_v4",
+  TEACHER_UNLOCKED: "mining_workshop_teacher_unlocked_v4",
+  THEME: "mining_workshop_theme_v5"
 };
 
 const state = {
@@ -24,7 +55,8 @@ const state = {
   submissions: {}, // { "group_1": { "scenario_1": { isLocked: true, ... } } }
   evaluations: {}, // { "group_1": { "scenario_1": { score: 3, ... } } }
   isTeacherMode: false,
-  autoSaveTimer: null
+  autoSaveTimer: null,
+  theme: "dark"
 };
 
 // ==========================================================================
@@ -192,7 +224,7 @@ function populateFormOptions() {
     selectType.appendChild(optionEl);
   });
 
-  // 4. Veri Analitiği Türü
+  // 4. Analitik Türü
   const selectAnalytics = document.getElementById("selectAnalyticsType");
   selectAnalytics.innerHTML = '<option value="" disabled selected>-- Analitik Türünü Seçiniz --</option>';
   CRITERIA_OPTIONS.analyticsTypes.forEach(item => {
@@ -267,10 +299,10 @@ function renderAssignedCards() {
     let statusClass = "status-empty";
     if (isLocked) {
       const score = hasEval ? `${evalData[`scenario_${scenarioId}`].score}/4` : "✓";
-      statusText = `🔒 Kilitlendi (${score})`;
+      statusText = `Kilitlendi (${score})`;
       statusClass = "status-filled";
     } else if (isScenarioFilled(sub)) {
-      statusText = "Dolduruldu (Gönderilmedi)";
+      statusText = "Dolduruldu";
       statusClass = "status-empty";
     }
 
@@ -280,7 +312,7 @@ function renderAssignedCards() {
     card.setAttribute("tabindex", "0");
     card.innerHTML = `
       <div class="card-top-row">
-        <span class="card-icon">${scenario.icon}</span>
+        <span class="card-icon">${getSvgIcon(scenario.icon, "ui-icon-md")}</span>
         <span class="card-status-badge ${statusClass}">
           ${statusText}
         </span>
@@ -292,7 +324,7 @@ function renderAssignedCards() {
       </div>
       <div class="card-footer">
         <span>${scenario.badge}</span>
-        <span>${isActive ? "▶ Seçili" : "İncele ➔"}</span>
+        <span>${isActive ? "Seçili" : "İncele"}</span>
       </div>
     `;
 
@@ -312,9 +344,9 @@ function renderCurrentScenario() {
   const scenario = SCENARIOS.find(s => s.id === state.currentScenarioId);
   if (!scenario) return;
 
-  document.getElementById("scenarioIcon").textContent = scenario.icon;
+  document.getElementById("scenarioIcon").innerHTML = getSvgIcon(scenario.icon, "ui-icon-lg");
   document.getElementById("scenarioTitle").textContent = `Senaryo ${scenario.id}: ${scenario.title}`;
-  document.getElementById("scenarioSector").textContent = `📌 ${scenario.sector} | ${scenario.badge}`;
+  document.getElementById("scenarioSector").textContent = `${scenario.sector} • ${scenario.badge}`;
   document.getElementById("scenarioDescription").textContent = scenario.context;
 
   const metaBadges = document.getElementById("scenarioMetaBadges");
@@ -417,8 +449,8 @@ function updateFormLockUI(isLocked) {
     });
     formatRadios.forEach(r => r.disabled = true);
 
-    checkBtnText.textContent = "📋 Değerlendirme & Hata Analizini Gör";
-    checkBtnIcon.textContent = "📋";
+    checkBtnText.textContent = "Değerlendirme & Hata Analizini Gör";
+    checkBtnIcon.innerHTML = getSvgIcon("clipboard");
     checkActionTitle.textContent = "Cevaplar Kaydedildi ve Kilitlendi";
     checkActionDesc.innerHTML = "Bu senaryo için cevaplarınız dondurulmuştur (tekrar doldurma engellenmiştir). <strong>Değerlendirme sonucunu ve yanlışların gerekçelerini</strong> dilediğiniz zaman inceleyebilirsiniz.";
 
@@ -438,8 +470,8 @@ function updateFormLockUI(isLocked) {
     });
     formatRadios.forEach(r => r.disabled = false);
 
-    checkBtnText.textContent = "🔒 Cevapları Kaydet & Kontrol Et";
-    checkBtnIcon.textContent = "🔒";
+    checkBtnText.textContent = "Cevapları Kaydet & Kontrol Et";
+    checkBtnIcon.innerHTML = getSvgIcon("lock");
     checkActionTitle.textContent = "Cevapları Kaydet, Kilitle & Kontrol Et";
     checkActionDesc.innerHTML = "Tüm alanları doldurduktan sonra bu butona basınız. <strong>Cevaplarınız sisteme kaydedilerek kilitlenecektir</strong> (tekrar doldurma ve değiştirme engellenir) ve anlık doğruluk/hata analiziniz açılacaktır.";
 
@@ -671,7 +703,7 @@ function handleCheckButtonClick() {
   // Sonuçları render et
   renderEvaluationResults();
 
-  showToast("🔒 Cevaplarınız başarıyla kaydedildi, kilitlendi ve kontrol edildi! (Tekrar doldurma engellendi)", "success");
+  showToast("Cevaplarınız başarıyla kaydedildi, kilitlendi ve kontrol edildi! (Tekrar doldurma engellendi)", "success");
 }
 
 function unlockCurrentScenarioByTeacher() {
@@ -769,7 +801,7 @@ function renderEvaluationResults() {
       <div class="feedback-head">
         <span>1. Veri Kaynağı</span>
         <span class="${sourceIsOk ? (sourceIsExact ? 'feedback-tag-correct' : 'feedback-tag-partial') : 'feedback-tag-incorrect'}">
-          ${sourceIsOk ? (sourceIsExact ? '✓ Doğru Seçim' : '🆗 Alternatif Kabul') : '✗ Hatalı Seçim'}
+          ${sourceIsOk ? (sourceIsExact ? '✓ Doğru Seçim' : 'Alternatif Kabul') : 'Hatalı Seçim'}
         </span>
       </div>
       <div class="feedback-choices-row">
@@ -780,7 +812,7 @@ function renderEvaluationResults() {
         <strong>${sourceIsOk ? 'Doğruluk Gerekçesi:' : 'Neden Yanlış ve Doğrusunun Nedeni:'}</strong>
         ${exp.whySource}
       </div>
-      ${!sourceIsOk && exp.commonMistakes ? `<div class="feedback-mistake-hint">⚠️ Dikkat: ${exp.commonMistakes}</div>` : ''}
+      ${!sourceIsOk && exp.commonMistakes ? `<div class="feedback-mistake-hint"><strong>Önemli Tuzak:</strong> ${exp.commonMistakes}</div>` : ''}
     </div>
 
     <!-- 2. Biçimsel Sınıflandırma -->
@@ -788,7 +820,7 @@ function renderEvaluationResults() {
       <div class="feedback-head">
         <span>2. Biçimsel Sınıflandırma</span>
         <span class="${formatIsOk ? (formatIsExact ? 'feedback-tag-correct' : 'feedback-tag-partial') : 'feedback-tag-incorrect'}">
-          ${formatIsOk ? (formatIsExact ? '✓ Doğru Seçim' : '🆗 Alternatif Kabul') : '✗ Hatalı Seçim'}
+          ${formatIsOk ? (formatIsExact ? '✓ Doğru Seçim' : 'Alternatif Kabul') : 'Hatalı Seçim'}
         </span>
       </div>
       <div class="feedback-choices-row">
@@ -806,7 +838,7 @@ function renderEvaluationResults() {
       <div class="feedback-head">
         <span>3. Veri Türü</span>
         <span class="${typeIsOk ? (typeIsExact ? 'feedback-tag-correct' : 'feedback-tag-partial') : 'feedback-tag-incorrect'}">
-          ${typeIsOk ? (typeIsExact ? '✓ Doğru Seçim' : '🆗 Alternatif Kabul') : '✗ Hatalı Seçim'}
+          ${typeIsOk ? (typeIsExact ? '✓ Doğru Seçim' : 'Alternatif Kabul') : 'Hatalı Seçim'}
         </span>
       </div>
       <div class="feedback-choices-row">
@@ -822,9 +854,9 @@ function renderEvaluationResults() {
     <!-- 4. Analitik Türü -->
     <div class="feedback-card ${analyticsIsOk ? (analyticsIsExact ? 'correct' : 'partial') : 'incorrect'}">
       <div class="feedback-head">
-        <span>4. Veri Analitiği Türü</span>
+        <span>4. Analitik Türü</span>
         <span class="${analyticsIsOk ? (analyticsIsExact ? 'feedback-tag-correct' : 'feedback-tag-partial') : 'feedback-tag-incorrect'}">
-          ${analyticsIsOk ? (analyticsIsExact ? '✓ Doğru Seçim' : '🆗 Alternatif Kabul') : '✗ Hatalı Seçim'}
+          ${analyticsIsOk ? (analyticsIsExact ? '✓ Doğru Seçim' : 'Alternatif Kabul') : 'Hatalı Seçim'}
         </span>
       </div>
       <div class="feedback-choices-row">
@@ -840,7 +872,7 @@ function renderEvaluationResults() {
 
   vebbBox.innerHTML = `
     <div class="vebb-eval-title">
-      <span>🔺 VEBB Piramidi Model Çözüm Rehberi (Kendi Cevaplarınızla Kıyaslayınız)</span>
+      <span>VEBB Piramidi Model Çözüm Rehberi (Kendi Cevaplarınızla Kıyaslayınız)</span>
     </div>
 
     <div class="vebb-eval-step-item">
@@ -934,12 +966,12 @@ function updateTeacherModeUI() {
   if (state.isTeacherMode) {
     btn.classList.add("active");
     btnText.textContent = "Hoca Modu (Açık)";
-    btn.querySelector(".icon").textContent = "🔓";
+    btn.querySelector(".icon").innerHTML = getSvgIcon("unlock");
     if (isCurrentScenarioLocked()) unlockBtn.style.display = "inline-flex";
   } else {
     btn.classList.remove("active");
     btnText.textContent = "Hoca Modu";
-    btn.querySelector(".icon").textContent = "🔒";
+    btn.querySelector(".icon").innerHTML = getSvgIcon("lock");
     unlockBtn.style.display = "none";
   }
 
@@ -1043,19 +1075,19 @@ function evaluateTeacherKeyLive() {
   // VEBB Model Cevapları
   const boxData = document.getElementById("teacherBoxData");
   boxData.style.display = "block";
-  boxData.innerHTML = `<strong>💡 Model Veri Tanımı (Hoca):</strong> ${key.vebb.veri}`;
+  boxData.innerHTML = `<strong>Model Veri Tanımı (Hoca):</strong> ${key.vebb.veri}`;
 
   const boxInfo = document.getElementById("teacherBoxInfo");
   boxInfo.style.display = "block";
-  boxInfo.innerHTML = `<strong>💡 Model Enformasyon / Bilgi (Hoca):</strong> ${key.vebb.bilgi}`;
+  boxInfo.innerHTML = `<strong>Model Enformasyon / Bilgi (Hoca):</strong> ${key.vebb.bilgi}`;
 
   const boxInsight = document.getElementById("teacherBoxInsight");
   boxInsight.style.display = "block";
-  boxInsight.innerHTML = `<strong>💡 Model Kök Neden İçgörüsü (Hoca):</strong> ${key.vebb.icgoru}`;
+  boxInsight.innerHTML = `<strong>Model Kök Neden İçgörüsü (Hoca):</strong> ${key.vebb.icgoru}`;
 
   const boxWisdom = document.getElementById("teacherBoxWisdom");
   boxWisdom.style.display = "block";
-  boxWisdom.innerHTML = `<strong>💡 Model Bilgelik / Aksiyon (Hoca):</strong> ${key.vebb.bilgelik}`;
+  boxWisdom.innerHTML = `<strong>Model Bilgelik / Aksiyon (Hoca):</strong> ${key.vebb.bilgelik}`;
 }
 
 // ==========================================================================
@@ -1070,7 +1102,7 @@ function exportJson() {
 
   const exportPayload = {
     metadata: {
-      platform: "Veri Analitiği - Veri Türleri ve Kaynakları Atölyesi",
+      platform: "Veri Madenciliği - Veri Türleri ve Kaynakları Atölyesi",
       exportDate: new Date().toISOString(),
       groupId: state.currentGroupId,
       assignedScenarios: state.assignments[state.currentGroupId]
@@ -1099,7 +1131,7 @@ function exportTxtReport() {
   const isLocked = !!currentSubmission.isLocked;
 
   let txt = `===============================================================================\n`;
-  txt += `        VERİ ANALİTİĞİ VE VERİ TÜRLERİ ATÖLYE ÇALIŞMASI RAPORU\n`;
+  txt += `        VERİ MADENCİLİĞİ VE VERİ TÜRLERİ ATÖLYE ÇALIŞMASI RAPORU\n`;
   txt += `===============================================================================\n\n`;
   txt += `Grup No          : Grup ${state.currentGroupId}\n`;
   txt += `Senaryo          : Senaryo #${currentScenario.id} - ${currentScenario.title}\n`;
@@ -1119,7 +1151,7 @@ function exportTxtReport() {
   txt += `* Veri Kaynağı            : ${currentSubmission.dataSource || "Doldurulmadı"}\n`;
   txt += `* Biçimsel Sınıflandırma  : ${currentSubmission.structuralFormat || "Doldurulmadı"}\n`;
   txt += `* Veri Türü               : ${currentSubmission.dataType || "Doldurulmadı"}\n`;
-  txt += `* Veri Analitiği Türü     : ${currentSubmission.analyticsType || "Doldurulmadı"}\n\n`;
+  txt += `* Analitik Türü          : ${currentSubmission.analyticsType || "Doldurulmadı"}\n\n`;
 
   txt += `-------------------------------------------------------------------------------\n`;
   txt += `3. VEBB (DIKW) KARAR PİRAMİDİ ANALİZİ\n`;
@@ -1179,7 +1211,179 @@ function downloadBlob(blob, fileName) {
 // KURA MATRİSİ MODALI
 // ==========================================================================
 
+
+// ==========================================================================
+// TEMA YÖNETİMİ (AÇIK / KOYU TEMA)
+// ==========================================================================
+
+function initTheme() {
+  const saved = localStorage.getItem(STORAGE_KEYS.THEME) || "dark";
+  applyTheme(saved);
+}
+
+function applyTheme(themeName) {
+  state.theme = themeName;
+  localStorage.setItem(STORAGE_KEYS.THEME, themeName);
+  const iconEl = document.getElementById("themeIcon");
+  const textEl = document.getElementById("themeText");
+
+  if (themeName === "light") {
+    document.body.classList.remove("theme-dark");
+    document.body.classList.add("theme-light");
+    if (iconEl) iconEl.innerHTML = getSvgIcon("moon");
+    if (textEl) textEl.textContent = "Koyu Tema";
+  } else {
+    document.body.classList.remove("theme-light");
+    document.body.classList.add("theme-dark");
+    if (iconEl) iconEl.innerHTML = getSvgIcon("sun");
+    if (textEl) textEl.textContent = "Açık Tema";
+  }
+}
+
+function toggleTheme() {
+  const nextTheme = state.theme === "light" ? "dark" : "light";
+  applyTheme(nextTheme);
+  showToast(nextTheme === "light" ? "Açık temaya geçildi." : "Koyu temaya geçildi.", "info");
+}
+
+// ==========================================================================
+// KONU LİSTESİ & 10 SENARYO KATALOĞU MOTORU
+// ==========================================================================
+
+function openTopicCatalogModal() {
+  renderTopicCatalogCards();
+  renderMatrixTable();
+  setCatalogTab("topics");
+  document.getElementById("matrixModal").style.display = "flex";
+}
+
+function setCatalogTab(tabName) {
+  const btnTopics = document.getElementById("tabBtnTopicsList");
+  const btnMatrix = document.getElementById("tabBtnMatrixTable");
+  const viewTopics = document.getElementById("viewTopicsList");
+  const viewMatrix = document.getElementById("viewMatrixTable");
+
+  if (!btnTopics || !btnMatrix || !viewTopics || !viewMatrix) return;
+
+  if (tabName === "topics") {
+    btnTopics.classList.add("active");
+    btnMatrix.classList.remove("active");
+    viewTopics.style.display = "block";
+    viewMatrix.style.display = "none";
+  } else {
+    btnTopics.classList.remove("active");
+    btnMatrix.classList.add("active");
+    viewTopics.style.display = "none";
+    viewMatrix.style.display = "block";
+  }
+}
+
+function renderTopicCatalogCards() {
+  const container = document.getElementById("topicCatalogGrid");
+  if (!container) return;
+  container.innerHTML = "";
+
+  SCENARIOS.forEach(sc => {
+    const assignedGroups = [];
+    for (let g = 1; g <= TOTAL_GROUPS; g++) {
+      if (state.assignments[g] && state.assignments[g].includes(sc.id)) {
+        assignedGroups.push(g);
+      }
+    }
+
+    const card = document.createElement("div");
+    card.className = "topic-catalog-card";
+    card.innerHTML = `
+      <div class="topic-card-header">
+        <div class="topic-card-icon-wrap">
+          ${getSvgIcon(sc.icon, "ui-icon-md")}
+        </div>
+        <div class="topic-card-meta">
+          <span class="topic-card-sector-tag">${sc.sector}</span>
+          <h4 class="topic-card-title">Senaryo #${sc.id}: ${sc.title}</h4>
+        </div>
+      </div>
+      <p class="topic-card-desc">${sc.description}</p>
+      <div class="topic-card-footer">
+        <span class="topic-assigned-groups-pill">
+          Atanan: ${assignedGroups.length > 0 ? assignedGroups.map(g => `Grup ${g}`).join(", ") : "Henüz atanmadı"}
+        </span>
+        <button type="button" class="btn-open-topic" data-scenario-id="${sc.id}">
+          ${getSvgIcon("copy", "ui-icon-xs")}
+          <span>Bu Konuyu İncele</span>
+        </button>
+      </div>
+    `;
+
+    card.querySelector(".btn-open-topic").addEventListener("click", () => {
+      selectTopicFromCatalog(sc.id);
+    });
+
+    container.appendChild(card);
+  });
+}
+
+function selectTopicFromCatalog(scenarioId) {
+  let targetGroup = state.currentGroupId;
+  const currentAssigned = state.assignments[state.currentGroupId] || [];
+  if (!currentAssigned.includes(scenarioId)) {
+    for (let g = 1; g <= TOTAL_GROUPS; g++) {
+      if (state.assignments[g] && state.assignments[g].includes(scenarioId)) {
+        targetGroup = g;
+        break;
+      }
+    }
+    if (targetGroup !== state.currentGroupId) {
+      state.currentGroupId = targetGroup;
+      renderGroupButtons();
+      renderAssignedCards();
+    }
+  }
+
+  switchScenario(scenarioId);
+  closeMatrixModal();
+  const sec = document.getElementById("scenarioSection");
+  if (sec) sec.scrollIntoView({ behavior: "smooth" });
+  showToast(`Senaryo #${scenarioId} (Grup ${state.currentGroupId}) inceleme ekranında açıldı.`, "info");
+}
+
+function renderMatrixTable() {
+  const tbody = document.getElementById("matrixTableBody");
+  if (!tbody) return;
+  tbody.innerHTML = "";
+
+  for (let g = 1; g <= TOTAL_GROUPS; g++) {
+    const assigned = state.assignments[g] || [];
+    const groupKey = `group_${g}`;
+    const groupData = state.submissions[groupKey] || {};
+
+    let lockedCount = 0;
+    assigned.forEach(id => {
+      if (groupData[`scenario_${id}`] && groupData[`scenario_${id}`].isLocked) lockedCount++;
+    });
+
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td><strong>Grup ${g}</strong></td>
+      ${assigned.map(id => {
+        const sc = SCENARIOS.find(s => s.id === id);
+        const isL = groupData[`scenario_${id}`] && groupData[`scenario_${id}`].isLocked;
+        return `<td>${sc ? `${getSvgIcon(sc.icon, "ui-icon-xs")} #${sc.id} ${sc.title}` : `#${id}`} ${isL ? '🔒' : ''}</td>`;
+      }).join("")}
+      <td>
+        <span class="cell-badge ${lockedCount === SCENARIOS_PER_GROUP ? "success" : (lockedCount > 0 ? "warning" : "neutral")}">
+          ${lockedCount} / ${SCENARIOS_PER_GROUP} Kilitlendi
+        </span>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  }
+}
+
 function openMatrixModal() {
+  openTopicCatalogModal();
+  return;
+
   const tbody = document.getElementById("matrixTableBody");
   tbody.innerHTML = "";
 
@@ -1305,7 +1509,21 @@ function shuffleDrawConfirm() {
 // ==========================================================================
 
 function setupEventListeners() {
-  document.getElementById("btnShuffleDraw").addEventListener("click", shuffleDrawConfirm);
+  // Tema Toggle
+  const themeBtn = document.getElementById("btnToggleTheme");
+  if (themeBtn) themeBtn.addEventListener("click", toggleTheme);
+
+  // Konu Kataloğu Sekme ve Buton Dinleyicileri
+  const tabTopics = document.getElementById("tabBtnTopicsList");
+  if (tabTopics) tabTopics.addEventListener("click", () => setCatalogTab("topics"));
+  const tabMatrix = document.getElementById("tabBtnMatrixTable");
+  if (tabMatrix) tabMatrix.addEventListener("click", () => setCatalogTab("matrix"));
+
+  const btnOpenSec = document.getElementById("btnOpenTopicsCatalogSec");
+  if (btnOpenSec) btnOpenSec.addEventListener("click", openTopicCatalogModal);
+
+  const btnShuffle = document.getElementById("btnShuffleDraw");
+  if (btnShuffle) btnShuffle.addEventListener("click", shuffleDrawConfirm);
 
   document.getElementById("btnAllGroupsMatrix").addEventListener("click", openMatrixModal);
   document.getElementById("btnCloseMatrixModal").addEventListener("click", closeMatrixModal);
@@ -1397,6 +1615,7 @@ function setupEventListeners() {
 // UYGULAMA BAŞLATICI
 // ==========================================================================
 window.addEventListener("DOMContentLoaded", () => {
+  initTheme();
   loadFromStorage();
   populateFormOptions();
 
@@ -1411,5 +1630,5 @@ window.addEventListener("DOMContentLoaded", () => {
   updateTeacherModeUI();
   setupEventListeners();
 
-  console.log("Veri Analitiği Lab v3 başlatıldı.");
+  console.log("Veri Madenciliği Lab v4 başlatıldı.");
 });

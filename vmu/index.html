@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-  <title>Veri Analitiği Lab - Veri Türleri, Kaynakları ve VEBB Piramidi</title>
-  <meta name="description" content="Üniversite Veri Analitiği dersi interaktif vaka analizi, veri türleri, kaynakları ve VEBB piramidi atölye çalışması platformu.">
+  <title>Veri Madenciliği Lab - Veri Türleri, Kaynakları ve VEBB Piramidi</title>
+  <meta name="description" content="Üniversite Veri Madenciliği dersi interaktif vaka analizi, veri türleri, kaynakları ve VEBB piramidi atölye çalışması platformu.">
   <meta name="theme-color" content="#070913">
   
   <!-- Google Fonts: Inter & Outfit -->
@@ -14,40 +14,47 @@
   
   <link rel="stylesheet" href="styles.css">
 </head>
-<body class="theme-cyber-dark">
-
-  <!-- Arka Plan Neon Efekt Katmanı -->
-  <div class="ambient-glow glow-1" aria-hidden="true"></div>
-  <div class="ambient-glow glow-2" aria-hidden="true"></div>
-  <div class="ambient-glow glow-3" aria-hidden="true"></div>
+<body class="theme-dark">
 
   <!-- Üst Navigasyon / Header -->
   <header class="app-header" id="mainHeader">
     <div class="header-container">
       <div class="brand-area">
-        <div class="brand-badge-cyber">
-          <span class="cyber-dot"></span>
-          <span>DATA ANALYTICS LAB</span>
+        <div class="brand-badge-clean">
+          <span class="brand-dot"></span>
+          <span>DATA MINING LAB</span>
         </div>
         <div class="brand-titles">
-          <h1 class="main-title">Veri Analitiği: Veri Türleri ve Kaynakları</h1>
+          <h1 class="main-title">Veri Madenciliği: Veri Türleri ve Kaynakları</h1>
           <p class="sub-title">İnteraktif Sınıf İçi Vaka Çalışması & VEBB Karar Piramidi Platformu</p>
         </div>
       </div>
 
       <div class="header-controls">
-        <div class="status-pill cyber-pill" id="completionStatusPill" title="Seçili grubun çözülen senaryo oranı">
+        <!-- Tema Değiştirici (Açık / Koyu Tema) -->
+        <button type="button" class="btn btn-control-outline btn-sm theme-toggle-btn" id="btnToggleTheme" title="Açık / Koyu Tema Değiştir">
+          <span class="btn-icon" id="themeIcon">
+            <svg class="ui-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          </span>
+          <span id="themeText">Açık Tema</span>
+        </button>
+
+        <div class="status-pill clean-pill" id="completionStatusPill" title="Seçili grubun çözülen senaryo oranı">
           <span class="status-dot"></span>
           <span id="completionStatusText">Grup İlerlemesi: 0 / 3</span>
         </div>
 
-        <button type="button" class="btn btn-cyber-outline btn-sm" id="btnAllGroupsMatrix" title="Sınıftaki tüm grupların kura dağıtımını gör">
-          <span>📊</span> Kura Tablosu
+        <!-- Konu Listesi (10 Senaryo) Butonu -->
+        <button type="button" class="btn btn-control-outline btn-sm" id="btnAllGroupsMatrix" title="Tüm 10 senaryoyu ve konu kataloğunu incele">
+          <svg class="ui-icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="9" y1="7" x2="16" y2="7"/><line x1="9" y1="11" x2="16" y2="11"/></svg>
+          <span>Konu Listesi (10 Senaryo)</span>
         </button>
 
         <!-- Hoca Modu Toggle Butonu (Öğretmene özel, şifreli) -->
-        <button type="button" class="btn btn-teacher-cyber btn-sm" id="btnToggleTeacherMode" title="Öğretmen Paneli">
-          <span class="icon">🔒</span>
+        <button type="button" class="btn btn-teacher-control btn-sm" id="btnToggleTeacherMode" title="Öğretmen Paneli">
+          <span class="icon" id="teacherBtnIcon">
+            <svg class="ui-icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </span>
           <span id="teacherBtnText">Hoca Modu</span>
         </button>
       </div>
@@ -57,16 +64,17 @@
   <!-- Ana İçerik Konteyneri -->
   <main class="main-layout">
 
-    <!-- BÖLÜM 1: GRUP SEÇİMİ VE YÖNETİM PANELİ -->
+    <!-- BÖLÜM 1: GRUP SEÇİMİ VE KONU YÖNETİMİ -->
     <section class="section-card cyber-card group-management-card" id="groupSection">
       <div class="section-header">
         <div class="section-title-wrap">
           <span class="section-step-num cyber-step">BÖLÜM 01</span>
-          <h2 class="section-title">Grup Seçimi ve Kura Yönetimi</h2>
+          <h2 class="section-title">Grup ve Konu Yönetimi</h2>
         </div>
         <div class="section-actions">
-          <button type="button" class="btn btn-cyber-primary btn-sm" id="btnShuffleDraw">
-            <span class="btn-icon">🎲</span> Senaryoları Yeniden Dağıt (Kura Çek)
+          <button type="button" class="btn btn-outline-subtle btn-sm" id="btnOpenTopicsCatalogSec" title="Tüm 10 konuyu katalog olarak aç">
+            <svg class="ui-icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            <span>Tüm 10 Konuyu Gör</span>
           </button>
         </div>
       </div>
@@ -75,7 +83,7 @@
       <div class="group-selector-wrapper">
         <div class="group-selector-header-row">
           <span class="group-select-label">Grubunuzu Seçin:</span>
-          <span class="group-select-hint">Sağa/sola kaydırarak dilediğiniz gruba geçiş yapabilirsiniz</span>
+          <span class="group-select-hint">Gruplar arasında geçiş yaparak atanan konuları inceleyebilirsiniz</span>
         </div>
         <div class="group-buttons-scroll-container">
           <div class="group-buttons-row" id="groupButtonsRow" role="tablist" aria-label="Grup Seçimi">
@@ -87,8 +95,8 @@
       <!-- Seçili Gruba Atanan 3 Senaryonun Kartları -->
       <div class="assigned-scenarios-container">
         <div class="assigned-heading">
-          <span class="assigned-title" id="assignedHeaderTitle">Grup 1 İçin Kurada Çıkan 3 Senaryo:</span>
-          <span class="assigned-instruction">İncelemek ve cevaplamak istediğiniz senaryo kartına tıklayın:</span>
+          <span class="assigned-title" id="assignedHeaderTitle">Grup 1 İçin Atanan 3 Konu:</span>
+          <span class="assigned-instruction">İncelemek ve cevaplamak istediğiniz konu kartına tıklayın:</span>
         </div>
 
         <div class="assigned-cards-grid" id="assignedCardsGrid">
@@ -113,7 +121,9 @@
       <div class="scenario-context-box cyber-context-box" id="scenarioContextBox">
         <div class="scenario-context-header">
           <div class="scenario-icon-glow-wrap">
-            <span class="scenario-icon-large" id="scenarioIcon">🏢</span>
+            <span class="scenario-icon-large" id="scenarioIcon">
+              <svg class="ui-icon ui-icon-lg" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+            </span>
           </div>
           <div class="scenario-context-info">
             <h3 class="scenario-current-title" id="scenarioTitle">Senaryo Yükleniyor...</h3>
@@ -127,12 +137,20 @@
       <div class="table-container-card cyber-table-card">
         <div class="table-top-toolbar">
           <div class="table-info-note">
-            <span class="note-icon">⚡</span>
+            <span class="note-icon">
+              <svg class="ui-icon" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+            </span>
             <span><strong>CANLI VERİ MATRİSİ (10 Satır):</strong> Aşağıdaki tabloyu inceleyiniz. Mobilde tabloyu sağa-sola kaydırabilirsiniz.</span>
           </div>
           <div class="table-toolbar-actions">
-            <button type="button" class="btn btn-cyber-ghost btn-xs" id="btnCopyTableJson" title="Veri tablosunu JSON olarak kopyala">
-              <span>📋</span> Veriyi Kopyala
+            <span class="table-scroll-badge" title="Tüm sütunları görmek için tabloyu yatay kaydırabilirsiniz">
+              <svg class="ui-icon ui-icon-xs" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+              <span>Sağa-Sola Kaydırılabilir (10 Sütun)</span>
+              <svg class="ui-icon ui-icon-xs" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+            </span>
+            <button type="button" class="btn btn-control-outline btn-xs" id="btnCopyTableJson" title="Veri tablosunu JSON olarak kopyala">
+              <svg class="ui-icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <span>Veriyi Kopyala</span>
             </button>
           </div>
         </div>
@@ -164,13 +182,16 @@
 
       <!-- KİLİTLİ FORM UYARI VE DURUM BANNERI (KONTROL SONRASI DEVREYE GİRER) -->
       <div class="locked-banner" id="lockedFormBanner" style="display:none;">
-        <div class="locked-banner-icon">🔒</div>
+        <div class="locked-banner-icon">
+          <svg class="ui-icon ui-icon-lg" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
         <div class="locked-banner-content">
           <strong class="locked-banner-title">BU SENARYO KESİN GÖNDERİLDİ VE KİLİTLENDİ</strong>
           <span class="locked-banner-desc">Cevaplarınız dondurulmuştur (tekrar değiştirilemez). Aşağıda başarı puanınızı ve detaylı hata gerekçelerini inceleyebilirsiniz.</span>
         </div>
         <button type="button" class="btn btn-warning-soft btn-xs" id="btnTeacherUnlockForm" style="display:none;">
-          🔓 Kilidi Aç (Hoca Yetkisi)
+          <svg class="ui-icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg>
+          <span>Kilidi Aç (Hoca Yetkisi)</span>
         </button>
       </div>
 
@@ -225,11 +246,11 @@
             <div class="teacher-solution-badge" id="teacherAnsType" style="display:none;"></div>
           </div>
 
-          <!-- 4. Veri Analitiği Türü -->
+          <!-- 4. Analitik Türü -->
           <div class="criteria-card cyber-criteria-card" id="criteriaCardAnalytics">
             <div class="criteria-card-head">
               <span class="criteria-num c-num-4">4</span>
-              <label for="selectAnalyticsType" class="criteria-label">Veri Analitiği Türü</label>
+              <label for="selectAnalyticsType" class="criteria-label">Analitik Türü</label>
             </div>
             <p class="criteria-desc">Bu vaka ile hangi seviye analitik soruya yanıt aranmaktadır?</p>
             <div class="input-wrapper">
@@ -247,7 +268,10 @@
         <div class="vebb-master-container cyber-vebb-master">
           <div class="vebb-header-bar">
             <div class="vebb-header-info">
-              <h3 class="vebb-title">🔺 VEBB Karar Piramidi (Veri → Enformasyon → İçgörü → Bilgelik)</h3>
+              <h3 class="vebb-title">
+                <svg class="ui-icon ui-icon-md" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                <span>VEBB Karar Piramidi (Veri → Enformasyon → İçgörü → Bilgelik)</span>
+              </h3>
               <p class="vebb-desc">Ham veriden stratejik karar ve eyleme uzanan analitik dönüşüm basamaklarını bu senaryo için açıklayınız.</p>
             </div>
           </div>
@@ -341,14 +365,19 @@
         <div class="self-check-container cyber-check-container" id="selfCheckContainer">
           <div class="self-check-bar">
             <div class="self-check-info">
-              <span class="self-check-icon glow-pulse-icon">🎯</span>
+              <span class="self-check-icon glow-pulse-icon">
+                <svg class="ui-icon ui-icon-lg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+              </span>
               <div class="self-check-text">
                 <h4 class="self-check-title" id="checkActionTitle">Cevapları Kaydet, Kilitle & Kontrol Et</h4>
                 <p class="self-check-sub" id="checkActionDesc">Tüm alanları doldurduktan sonra bu butona basınız. <strong>Cevaplarınız sisteme kaydedilerek kilitlenecektir</strong> (tekrar doldurma ve değiştirme engellenir) ve anlık doğruluk/hata analiziniz açılacaktır.</p>
               </div>
             </div>
             <button type="button" class="btn btn-cyber-primary btn-check-answers" id="btnCheckScenarioAnswers">
-              <span id="btnCheckIcon">🔒</span> <span id="btnCheckText">🔒 Cevapları Kaydet & Kontrol Et</span>
+              <span id="btnCheckIcon">
+                <svg class="ui-icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              </span>
+              <span id="btnCheckText">Cevapları Kaydet & Kontrol Et</span>
             </button>
           </div>
 
@@ -359,7 +388,10 @@
                 <span class="score-badge cyber-score-badge" id="checkScoreBadge">0 / 4 Kriter Doğru</span>
                 <span class="score-status-text" id="checkScoreStatusText">Değerlendirme Sonucu</span>
               </div>
-              <button type="button" class="btn btn-cyber-ghost btn-xs" id="btnCloseFeedbackPanel">Kapat</button>
+              <button type="button" class="btn btn-cyber-ghost btn-xs" id="btnCloseFeedbackPanel">
+                <svg class="ui-icon ui-icon-xs" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                <span>Kapat</span>
+              </button>
             </div>
             <div class="results-items-grid" id="feedbackItemsGrid">
               <!-- JS ile kriter bazlı doğru/yanlış gerekçe kartları doldurulacak -->
@@ -379,28 +411,40 @@
 
           <div class="action-buttons-group">
             <button type="button" class="btn btn-cyber-success" id="btnSaveAnswers">
-              <span class="btn-icon">💾</span> Taslağı Kaydet
+              <span class="btn-icon">
+                <svg class="ui-icon" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+              </span>
+              <span>Taslağı Kaydet</span>
             </button>
 
             <div class="dropdown-export-wrapper">
               <button type="button" class="btn btn-cyber-outline" id="btnExportMenuToggle">
-                <span class="btn-icon">📥</span> Raporu İndir ▾
+                <span class="btn-icon">
+                  <svg class="ui-icon" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                </span>
+                <span>Raporu İndir ▾</span>
               </button>
               <div class="dropdown-export-menu cyber-dropdown" id="exportMenuDropdown">
                 <button type="button" class="dropdown-item" id="btnExportJson">
-                  <span>📄</span> JSON Olarak İndir (Tüm Veri)
+                  <svg class="ui-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="10 12 8 14 10 16"/><polyline points="14 12 16 14 14 16"/></svg>
+                  <span>JSON Olarak İndir (Tüm Veri)</span>
                 </button>
                 <button type="button" class="dropdown-item" id="btnExportTxt">
-                  <span>📝</span> TXT Çalışma Raporu İndir
+                  <svg class="ui-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                  <span>TXT Çalışma Raporu İndir</span>
                 </button>
                 <button type="button" class="dropdown-item" id="btnPrintReport">
-                  <span>🖨️</span> PDF / Yazdır Formatı
+                  <svg class="ui-icon" viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                  <span>PDF / Yazdır Formatı</span>
                 </button>
               </div>
             </div>
 
             <button type="button" class="btn btn-warning-soft" id="btnClearForm">
-              <span class="btn-icon">🧹</span> Formu Temizle
+              <span class="btn-icon">
+                <svg class="ui-icon" viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+              </span>
+              <span>Formu Temizle</span>
             </button>
           </div>
         </div>
@@ -414,7 +458,10 @@
   <div class="modal-overlay" id="teacherPasswordModal" style="display:none;">
     <div class="modal-card cyber-modal">
       <div class="modal-header">
-        <h3 class="modal-title">🔑 Hoca Modu Girişi</h3>
+        <h3 class="modal-title">
+          <svg class="ui-icon" viewBox="0 0 24 24"><circle cx="7.5" cy="16.5" r="4.5"/><path d="M12 12l8-8"/><path d="M17 7l3 3"/><path d="M15 9l2 2"/></svg>
+          <span>Hoca Modu Girişi</span>
+        </h3>
         <button type="button" class="modal-close-btn" id="btnCloseTeacherModal">&times;</button>
       </div>
       <div class="modal-body">
@@ -432,35 +479,70 @@
     </div>
   </div>
 
-  <!-- MODAL: TÜM GRUPLARIN KURA DAĞITIM MATRİSİ -->
+  <!-- MODAL: KONU LİSTESİ & 10 SENARYO KATALOĞU -->
   <div class="modal-overlay" id="matrixModal" style="display:none;">
-    <div class="modal-card modal-lg cyber-modal">
+    <div class="modal-card modal-xl clean-modal">
       <div class="modal-header">
-        <h3 class="modal-title">📊 Sınıf Kura Dağıtım Matrisi (Grup 1 - Grup 10)</h3>
+        <div class="modal-title-wrap">
+          <h3 class="modal-title">
+            <svg class="ui-icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="9" y1="7" x2="16" y2="7"/><line x1="9" y1="11" x2="16" y2="11"/></svg>
+            <span>Veri Madenciliği Konu Listesi (10 Senaryo)</span>
+          </h3>
+        </div>
         <button type="button" class="modal-close-btn" id="btnCloseMatrixModal">&times;</button>
       </div>
+
+      <!-- Sekme Butonları (10 Konu Kataloğu vs Grup Dağılım Matrisi) -->
+      <div class="modal-tabs-header">
+        <button type="button" class="modal-tab-btn active" id="tabBtnTopicsList">
+          <svg class="ui-icon ui-icon-xs" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          <span>10 Konu Kataloğu (Tüm Senaryolar)</span>
+        </button>
+        <button type="button" class="modal-tab-btn" id="tabBtnMatrixTable">
+          <svg class="ui-icon ui-icon-xs" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></svg>
+          <span>Grup Dağılım Matrisi</span>
+        </button>
+      </div>
+
       <div class="modal-body">
-        <p class="modal-text">Sınıftaki 10 grubun kura sonucu atanmış olan 3'er senaryosunun genel dağılımı ve kilitlenme / tamamlama durumları:</p>
-        <div class="matrix-table-wrap">
-          <table class="matrix-table cyber-matrix-table">
-            <thead>
-              <tr>
-                <th>Grup No</th>
-                <th>1. Senaryo</th>
-                <th>2. Senaryo</th>
-                <th>3. Senaryo</th>
-                <th>Durum</th>
-              </tr>
-            </thead>
-            <tbody id="matrixTableBody">
-              <!-- JS ile doldurulacak -->
-            </tbody>
-          </table>
+        <!-- SEKME 1: 10 SENARYONUN TÜMÜNÜ İÇEREN ZENGİN KONU KATALOĞU -->
+        <div class="modal-tab-view" id="viewTopicsList">
+          <div class="tab-view-intro">
+            <p class="modal-text">Ders kapsamında incelenen 10 farklı sektör senaryosu. Dilediğiniz konunun veri setini ve formunu açmak için <strong>"Bu Konuyu İncele"</strong> butonuna tıklayabilirsiniz.</p>
+          </div>
+          <div class="topic-catalog-grid" id="topicCatalogGrid">
+            <!-- JS ile 10 senaryonun kartları render edilecek -->
+          </div>
+        </div>
+
+        <!-- SEKME 2: 10 GRUBUN DAĞILIM MATRİSİ -->
+        <div class="modal-tab-view" id="viewMatrixTable" style="display: none;">
+          <p class="modal-text">Sınıftaki 10 grubun atanmış olan 3'er senaryosunun genel dağılımı ve tamamlama / kilitlenme durumları:</p>
+          <div class="matrix-table-wrap">
+            <table class="matrix-table">
+              <thead>
+                <tr>
+                  <th>Grup No</th>
+                  <th>1. Konu</th>
+                  <th>2. Konu</th>
+                  <th>3. Konu</th>
+                  <th>Durum</th>
+                </tr>
+              </thead>
+              <tbody id="matrixTableBody">
+                <!-- JS ile doldurulacak -->
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
+
       <div class="modal-footer">
-        <button type="button" class="btn btn-cyber-ghost" id="btnExportMatrixJson">JSON İndir</button>
-        <button type="button" class="btn btn-cyber-primary" id="btnCloseMatrixModalBtn">Kapat</button>
+        <button type="button" class="btn btn-outline-subtle" id="btnExportMatrixJson">
+          <svg class="ui-icon ui-icon-xs" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span>JSON İndir</span>
+        </button>
+        <button type="button" class="btn btn-primary-clean" id="btnCloseMatrixModalBtn">Kapat</button>
       </div>
     </div>
   </div>
